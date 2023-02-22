@@ -22,11 +22,11 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
         _formKey.currentState!.save();
         print(formData.values);
 
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => const InterestScreen(),
-          ),
-        );
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(
+              builder: (context) => const InterestScreen(),
+            ),
+            (route) => false);
       }
     }
   }
