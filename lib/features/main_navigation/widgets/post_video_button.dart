@@ -3,7 +3,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 
 class PostVideoButton extends StatelessWidget {
-  const PostVideoButton({super.key});
+  final bool hovered;
+  const PostVideoButton({super.key, required this.hovered});
 
   @override
   Widget build(BuildContext context) {
@@ -12,54 +13,71 @@ class PostVideoButton extends StatelessWidget {
       children: [
         Positioned(
           right: 20,
-          child: Container(
-            height: 30,
-            width: 25,
-            padding: const EdgeInsets.symmetric(
-              horizontal: Sizes.size8,
+          child: AnimatedContainer(
+            duration: const Duration(
+              milliseconds: 300,
             ),
-            decoration: BoxDecoration(
-              color: const Color(
-                0xff61d4f0,
+            child: Container(
+              height: 30,
+              width: 25,
+              padding: const EdgeInsets.symmetric(
+                horizontal: Sizes.size8,
               ),
-              borderRadius: BorderRadius.circular(
-                Sizes.size8,
-              ),
-            ),
-          ),
-        ),
-        Positioned(
-          left: 20,
-          child: Container(
-            height: 30,
-            width: 25,
-            padding: const EdgeInsets.symmetric(
-              horizontal: Sizes.size8,
-            ),
-            decoration: BoxDecoration(
-              color: Theme.of(context).primaryColor,
-              borderRadius: BorderRadius.circular(
-                Sizes.size8,
+              decoration: BoxDecoration(
+                color: hovered
+                    ? Colors.blue
+                    : const Color(
+                        0xff61d4f0,
+                      ),
+                borderRadius: BorderRadius.circular(
+                  Sizes.size8,
+                ),
               ),
             ),
           ),
         ),
-        Container(
-          height: 30,
-          padding: const EdgeInsets.symmetric(
-            horizontal: Sizes.size12,
+        AnimatedContainer(
+          duration: const Duration(
+            milliseconds: 300,
           ),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(
-              Sizes.size6,
+          child: Positioned(
+            left: 20,
+            child: Container(
+              height: 30,
+              width: 25,
+              padding: const EdgeInsets.symmetric(
+                horizontal: Sizes.size8,
+              ),
+              decoration: BoxDecoration(
+                color: hovered ? Colors.red : Theme.of(context).primaryColor,
+                borderRadius: BorderRadius.circular(
+                  Sizes.size8,
+                ),
+              ),
             ),
           ),
-          child: const Center(
-            child: FaIcon(
-              FontAwesomeIcons.plus,
-              color: Colors.black,
-              size: Sizes.size18,
+        ),
+        AnimatedContainer(
+          duration: const Duration(
+            milliseconds: 300,
+          ),
+          child: Container(
+            height: 30,
+            padding: const EdgeInsets.symmetric(
+              horizontal: Sizes.size12,
+            ),
+            decoration: BoxDecoration(
+              color: hovered ? Colors.grey.shade300 : Colors.white,
+              borderRadius: BorderRadius.circular(
+                Sizes.size6,
+              ),
+            ),
+            child: const Center(
+              child: FaIcon(
+                FontAwesomeIcons.plus,
+                color: Colors.black,
+                size: Sizes.size18,
+              ),
             ),
           ),
         )

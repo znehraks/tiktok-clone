@@ -15,10 +15,23 @@ class MainNavigationScreen extends StatefulWidget {
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
   int _selectedIndex = 0;
+  bool _hovered = false;
 
   void _onTap(int index) {
     setState(() {
       _selectedIndex = index;
+    });
+  }
+
+  void _onLongPressStart(details) {
+    setState(() {
+      _hovered = true;
+    });
+  }
+
+  void _onLongPressEnd(details) {
+    setState(() {
+      _hovered = false;
     });
   }
 
@@ -83,7 +96,17 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               ),
               Gaps.h24,
               GestureDetector(
-                  onTap: _onPostVideoButtonTap, child: const PostVideoButton()),
+                onTap: _onPostVideoButtonTap,
+                onLongPressDown: _onLongPressStart,
+                onLongPressCancel: () {
+                  dynamic details;
+                  _onLongPressEnd(details);
+                },
+                onLongPressEnd: _onLongPressEnd,
+                child: PostVideoButton(
+                  hovered: _hovered,
+                ),
+              ),
               Gaps.h24,
               NavTab(
                 text: "Inbox",
