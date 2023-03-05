@@ -84,12 +84,12 @@ class _DiscoverScreenState extends State<DiscoverScreen>
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          leading: IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.arrow_back_ios,
-            ),
-          ),
+          // leading: IconButton(
+          //   onPressed: () {},
+          //   icon: const Icon(
+          //     Icons.arrow_back_ios,
+          //   ),
+          // ),
           elevation: 1,
           // title: CupertinoSearchTextField(
           //   controller: _textEditingController,
@@ -98,6 +98,12 @@ class _DiscoverScreenState extends State<DiscoverScreen>
           // ),
           title: Row(
             children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.1,
+                child: const Icon(
+                  Icons.arrow_back_ios,
+                ),
+              ),
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.7,
                 height: Sizes.size36,
@@ -141,13 +147,16 @@ class _DiscoverScreenState extends State<DiscoverScreen>
                       onSubmitted: _onSearchSubmitted),
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.symmetric(
-                  horizontal: Sizes.size8,
-                ),
-                child: const FaIcon(
-                  FontAwesomeIcons.sliders,
-                  size: Sizes.size18,
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.1,
+                child: Container(
+                  margin: const EdgeInsets.only(
+                    left: Sizes.size20,
+                  ),
+                  child: const FaIcon(
+                    FontAwesomeIcons.sliders,
+                    size: Sizes.size20,
+                  ),
                 ),
               ),
             ],
