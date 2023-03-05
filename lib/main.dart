@@ -15,21 +15,23 @@ class TikTokApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        scaffoldBackgroundColor: Colors.white,
-        appBarTheme: const AppBarTheme(
-          foregroundColor: Colors.black,
-          backgroundColor: Colors.white,
-          elevation: 0,
-          titleTextStyle: TextStyle(
-            color: Colors.black,
-            fontSize: Sizes.size20,
-            fontWeight: FontWeight.w600,
+          scaffoldBackgroundColor: Colors.white,
+          appBarTheme: const AppBarTheme(
+            foregroundColor: Colors.black,
+            backgroundColor: Colors.white,
+            elevation: 0,
+            titleTextStyle: TextStyle(
+              color: Colors.black,
+              fontSize: Sizes.size20,
+              fontWeight: FontWeight.w600,
+            ),
           ),
-        ),
-        primaryColor: const Color(
-          0xFFE9435A,
-        ),
-      ),
+          primaryColor: const Color(
+            0xFFE9435A,
+          ),
+          textSelectionTheme: const TextSelectionThemeData(
+            cursorColor: Color(0xFFE9435A),
+          )),
       // home: const SignUpScreen(),
       home: const MainNavigationScreen(),
     );

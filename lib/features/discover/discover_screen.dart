@@ -1,5 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+
+// TODO 01. Tab 이동 시, 키보드 가리기
+// TODO 02. Input을 사진과 동일하게
 
 final tabs = [
   "Top",
@@ -11,17 +17,43 @@ final tabs = [
   "Brands",
 ];
 
-class DiscoverScreen extends StatelessWidget {
+class DiscoverScreen extends StatefulWidget {
   const DiscoverScreen({super.key});
+
+  @override
+  State<DiscoverScreen> createState() => _DiscoverScreenState();
+}
+
+class _DiscoverScreenState extends State<DiscoverScreen> {
+  final TextEditingController _textEditingController =
+      TextEditingController(text: "Initial Text");
+  void _onSearchChanged(String value) {
+    print(value);
+  }
+
+  void _onSearchSubmitted(String value) {
+    print(value);
+  }
+
+  @override
+  void dispose() {
+    _textEditingController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: tabs.length,
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           elevation: 1,
-          title: const Text('Discover'),
+          title: CupertinoSearchTextField(
+            controller: _textEditingController,
+            onChanged: _onSearchChanged,
+            onSubmitted: _onSearchSubmitted,
+          ),
           centerTitle: true,
           bottom: TabBar(
               splashFactory: NoSplash.splashFactory,
@@ -46,6 +78,7 @@ class DiscoverScreen extends StatelessWidget {
         body: TabBarView(
           children: [
             GridView.builder(
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               itemCount: 20,
               padding: const EdgeInsets.all(
                 Sizes.size6,
@@ -57,13 +90,73 @@ class DiscoverScreen extends StatelessWidget {
                 crossAxisSpacing: Sizes.size10,
                 // 세로 Gap
                 mainAxisSpacing: Sizes.size10,
-                childAspectRatio: 9 / 16,
+                childAspectRatio: 9 / 20,
               ),
-              itemBuilder: (context, index) => Container(
-                color: Colors.teal,
-                child: Center(
-                  child: Text("$index"),
-                ),
+              itemBuilder: (context, index) => Column(
+                children: [
+                  Container(
+                    clipBehavior: Clip.hardEdge,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(
+                        Sizes.size12,
+                      ),
+                    ),
+                    child: AspectRatio(
+                      aspectRatio: 9 / 16,
+                      child: FadeInImage.assetNetwork(
+                        fit: BoxFit.cover,
+                        placeholder: "assets/images/chicken.jpeg",
+                        image:
+                            "https://images.unsplash.com/photo-1626074353765-517a681e40be?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80",
+                      ),
+                    ),
+                  ),
+                  Gaps.v10,
+                  const Text(
+                    "This is a very long long long long long lonlong lonlong lonlong lonlong lonlong lon",
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: Sizes.size18,
+                    ),
+                  ),
+                  Gaps.v5,
+                  DefaultTextStyle(
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey.shade600,
+                    ),
+                    child: Row(
+                      children: [
+                        const CircleAvatar(
+                          radius: Sizes.size12,
+                          backgroundImage: NetworkImage(
+                            "https://avatars.githubusercontent.com/u/48117986?s=400&u=dc7f1e49122f3eb850245e0805628223ed584b4e&v=4",
+                          ),
+                        ),
+                        Gaps.h4,
+                        const Expanded(
+                          child: Text(
+                            "My avatar is going to be very long",
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        Gaps.h4,
+                        FaIcon(
+                          FontAwesomeIcons.heart,
+                          size: Sizes.size16,
+                          color: Colors.grey.shade600,
+                        ),
+                        Gaps.h2,
+                        const Text(
+                          "2.5M",
+                        )
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
             for (var tab in tabs.skip(1))
