@@ -75,6 +75,10 @@ class _VideoPostState extends State<VideoPost>
         !_isPaused) {
       _videoPlayerController.play();
     }
+    // 화면에서 사라지면 정지
+    if (_videoPlayerController.value.isPlaying && info.visibleFraction == 0) {
+      _onTogglePause();
+    }
   }
 
   void _onTogglePause() {
