@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
@@ -29,13 +28,14 @@ class _DiscoverScreenState extends State<DiscoverScreen>
   final TextEditingController _textEditingController =
       TextEditingController(text: "Initial Text");
 
+  bool _isTextEmpty = false;
+
   late final TabController _tabController;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: tabs.length, vsync: this);
-
     _tabController.addListener(_onDismissKeyboard);
   }
 
@@ -48,10 +48,20 @@ class _DiscoverScreenState extends State<DiscoverScreen>
 
   void _onSearchChanged(String value) {
     print(value);
+    setState(() {
+      _isTextEmpty = value.isEmpty;
+    });
   }
 
   void _onSearchSubmitted(String value) {
     print(value);
+  }
+
+  void _onDeleteCurrentText() {
+    _textEditingController.clear();
+    setState(() {
+      _isTextEmpty = true;
+    });
   }
 
 // TODO onTap 방식으로 제어
@@ -74,11 +84,73 @@ class _DiscoverScreenState extends State<DiscoverScreen>
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
+          leading: IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.arrow_back_ios,
+            ),
+          ),
           elevation: 1,
-          title: CupertinoSearchTextField(
-            controller: _textEditingController,
-            onChanged: _onSearchChanged,
-            onSubmitted: _onSearchSubmitted,
+          // title: CupertinoSearchTextField(
+          //   controller: _textEditingController,
+          //   onChanged: _onSearchChanged,
+          //   onSubmitted: _onSearchSubmitted,
+          // ),
+          title: Row(
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.7,
+                height: Sizes.size36,
+                child: Container(
+                  color: Colors.grey.shade200,
+                  child: TextField(
+                      style: const TextStyle(
+                        fontSize: Sizes.size16,
+                        decoration: TextDecoration.none,
+                      ),
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        prefix: Container(
+                          margin: const EdgeInsets.symmetric(
+                            horizontal: Sizes.size10,
+                          ),
+                          child: FaIcon(
+                            FontAwesomeIcons.magnifyingGlass,
+                            size: Sizes.size16,
+                            color: Colors.grey.shade800,
+                          ),
+                        ),
+                        suffix: _isTextEmpty
+                            ? null
+                            : GestureDetector(
+                                onTap: _onDeleteCurrentText,
+                                child: Container(
+                                  margin: const EdgeInsets.symmetric(
+                                    horizontal: Sizes.size10,
+                                  ),
+                                  child: FaIcon(
+                                    FontAwesomeIcons.solidCircleXmark,
+                                    size: Sizes.size16,
+                                    color: Colors.grey.shade600,
+                                  ),
+                                ),
+                              ),
+                      ),
+                      controller: _textEditingController,
+                      onChanged: _onSearchChanged,
+                      onSubmitted: _onSearchSubmitted),
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.symmetric(
+                  horizontal: Sizes.size8,
+                ),
+                child: const FaIcon(
+                  FontAwesomeIcons.sliders,
+                  size: Sizes.size18,
+                ),
+              ),
+            ],
           ),
           centerTitle: true,
           bottom: TabBar(
