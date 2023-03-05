@@ -24,9 +24,28 @@ class DiscoverScreen extends StatefulWidget {
   State<DiscoverScreen> createState() => _DiscoverScreenState();
 }
 
-class _DiscoverScreenState extends State<DiscoverScreen> {
+class _DiscoverScreenState extends State<DiscoverScreen>
+    with SingleTickerProviderStateMixin {
   final TextEditingController _textEditingController =
       TextEditingController(text: "Initial Text");
+
+  late final TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: tabs.length, vsync: this);
+
+    _tabController.addListener(_onDismissKeyboard);
+  }
+
+// TODO controller를 이용하여 제어
+  void _onDismissKeyboard() {
+    if (_tabController.indexIsChanging) {
+      FocusScope.of(context).unfocus();
+    }
+  }
+
   void _onSearchChanged(String value) {
     print(value);
   }
@@ -35,9 +54,16 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
     print(value);
   }
 
+// TODO onTap 방식으로 제어
+  // void _onTapBarTap(int value) {
+  //   FocusScope.of(context).unfocus();
+  // }
+
   @override
   void dispose() {
     _textEditingController.dispose();
+    _tabController.removeListener(_onDismissKeyboard);
+    _tabController.dispose();
     super.dispose();
   }
 
@@ -56,6 +82,8 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
           ),
           centerTitle: true,
           bottom: TabBar(
+              controller: _tabController,
+              // onTap: _onTapBarTap,
               splashFactory: NoSplash.splashFactory,
               padding: const EdgeInsets.symmetric(
                 horizontal: Sizes.size16,
