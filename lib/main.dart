@@ -15,6 +15,8 @@ class TikTokApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
+          highlightColor: Colors.transparent,
+          splashColor: Colors.transparent,
           scaffoldBackgroundColor: Colors.white,
           appBarTheme: const AppBarTheme(
             foregroundColor: Colors.black,
