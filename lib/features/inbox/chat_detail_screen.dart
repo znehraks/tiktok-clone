@@ -23,7 +23,8 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
             children: [
               const CircleAvatar(
                 radius: Sizes.size24,
-                foregroundImage: NetworkImage(""),
+                foregroundImage: NetworkImage(
+                    "https://avatars.githubusercontent.com/u/48117986?s=400&u=dc7f1e49122f3eb850245e0805628223ed584b4e&v=4"),
                 child: Text('Jay'),
               ),
               Positioned(
@@ -128,12 +129,44 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
             width: MediaQuery.of(context).size.width,
             // TODO dm 메시지 input 완성하기
             child: BottomAppBar(
+              // color: Colors.grey.shade100,
               color: Colors.grey.shade100,
+              padding: const EdgeInsets.all(
+                Sizes.size8,
+              ),
               child: Row(
                 children: [
-                  const Expanded(child: TextField()),
-                  Gaps.h20,
+                  Expanded(
+                    child: TextField(
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: const OutlineInputBorder(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(Sizes.size10),
+                              topRight: Radius.circular(Sizes.size10),
+                              bottomLeft: Radius.circular(Sizes.size10),
+                            ),
+                            borderSide: BorderSide.none),
+                        contentPadding: const EdgeInsets.only(
+                          left: Sizes.size20,
+                          right: Sizes.size10,
+                        ),
+                        hintText: "Send a message...",
+                        suffix: FaIcon(
+                          FontAwesomeIcons.faceSmile,
+                          color: Colors.grey.shade600,
+                          size: Sizes.size24,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Gaps.h8,
                   Container(
+                    padding: const EdgeInsets.only(
+                      bottom: Sizes.size4,
+                      right: Sizes.size10,
+                    ),
                     child: const FaIcon(
                       FontAwesomeIcons.paperPlane,
                     ),
