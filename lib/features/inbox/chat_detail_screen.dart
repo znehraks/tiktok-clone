@@ -19,10 +19,34 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
           contentPadding: EdgeInsets.zero,
           horizontalTitleGap: Sizes.size8,
           // TODO leading에 로그인 중일때 나오는 초록색 동그라미 추가
-          leading: const CircleAvatar(
-            radius: Sizes.size24,
-            foregroundImage: NetworkImage(""),
-            child: Text('Jay'),
+          leading: Stack(
+            children: [
+              const CircleAvatar(
+                radius: Sizes.size24,
+                foregroundImage: NetworkImage(""),
+                child: Text('Jay'),
+              ),
+              Positioned(
+                width: Sizes.size16,
+                height: Sizes.size16,
+                bottom: 0,
+                right: 0,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.green,
+                    border: Border.all(
+                      width: Sizes.size2,
+                      color: Colors.white,
+                    ),
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(
+                        Sizes.size12,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
           title: const Text(
             "Jay",
